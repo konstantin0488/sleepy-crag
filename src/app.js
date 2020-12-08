@@ -24,7 +24,6 @@ const app = (gon, userName, socket) => {
   );
 
   socket.on('newMessage', ({ data }) => {
-    console.log(data.attributes);
     store.dispatch(addMessage(data.attributes));
   });
 

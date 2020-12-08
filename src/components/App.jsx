@@ -1,5 +1,6 @@
 import React from 'react';
 import ChannelList from './ChannelList';
+import MessageSection from './MessageSection';
 
 const App = () => (
   <div className="row justify-content-center h-100">
@@ -9,23 +10,7 @@ const App = () => (
       </div>
     </div>
     <div className="col-md-9 chat">
-      <div className="card">
-        <div className="card-body msg_card_body">
-          <div className="d-flex justify-content-start mb-4">
-            MESSAGE
-          </div>
-        </div>
-        <div className="card-footer">
-          <div className="input-group">
-            <textarea name="" className="form-control type_msg" placeholder="Type your message..." />
-            <div className="input-group-append">
-              <span className="input-group-text send_btn">
-                <button type="submit" className="btn-sm">SEND</button>
-              </span>
-            </div>
-          </div>
-        </div>
-      </div>
+      <MessageSection />
     </div>
   </div>
 );

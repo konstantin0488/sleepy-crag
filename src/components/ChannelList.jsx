@@ -1,11 +1,16 @@
 /* eslint-disable jsx-a11y/anchor-is-valid */
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import { idCurrentChannel } from '../actions';
 
 const ChannelList = () => {
+  const dispatch = useDispatch();
   const allChannel = useSelector((state) => state.channels);
   const allChannelArray = Object.values(allChannel);
-  console.log(allChannelArray);
+
+  const setChannelId = (channelId) => () => {
+    dispatch(idCurrentChannel(channelId));
+  };
 
   return (
     <>
@@ -18,7 +23,7 @@ const ChannelList = () => {
             allChannelArray.map((channel) => (
               <li className="active" key={channel.id}>
                 <div className="bd-highlight">
-                  <button type="button" className="button_room btn btn-block">{channel.name}</button>
+                  <button type="button" className="button_room btn btn-block" onClick={setChannelId(channel.id)}>{channel.name}</button>
                 </div>
               </li>
             ))

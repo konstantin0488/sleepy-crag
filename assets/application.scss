@@ -151,13 +151,17 @@ font-size: 20px;
 cursor: pointer;
 margin-right: 20px;
 }
+.date {
+  font-size: 10px;
+}
 .msg_cotainer{
 margin-top: auto;
-margin-bottom: auto;
+margin-bottom: 20px;
 margin-left: 10px;
-border-radius: 25px;
+margin-right: 10px;
+border-radius: 10px;
 background-color: #82ccdd;
-padding: 10px;
+padding: 5px;
 position: relative;
 }
 .msg_cotainer_send{
@@ -176,12 +180,9 @@ bottom: -15px;
 color: rgba(255,255,255,0.5);
 font-size: 10px;
 }
-.msg_time_send{
-position: absolute;
+.date{
+position: relative;
 right:0;
-bottom: -15px;
-color: rgba(255,255,255,0.5);
-font-size: 10px;
 }
 .msg_head{
 position: relative;
@@ -278,7 +279,7 @@ margin-bottom: 15px !important;
 // .button_room {
 //   @include center;
 //   background: #333;
-//   color: #ccc;
+  // color: #ccc;
 //   width: 200px;
 //   height: 60px;
 //   border: 0;

@@ -4,26 +4,17 @@ import * as actions from '../actions';
 // import { uniqueId, omitBy } from 'lodash';
 
 const channels = handleActions({
-  [actions.addChannel](state, { payload: newChannel }) {
-    return state;
-  },
-  [actions.removeChanel](state, { payload: channelId }) {
-    return state;
-  },
+  // [actions.addChannel](state, { payload: newChannel }) {
+  //   return state;
+  // },
+  // [actions.removeChanel](state, { payload: channelId }) {
+  //   return state;
+  // },
 }, {});
 
 const messages = handleActions({
   [actions.addMessage](state, { payload: message }) {
     return [...state, message];
-  },
-  [actions.sendMessageRequest](state) {
-    return state;
-  },
-  [actions.sendMessageSuccess](state) {
-    return state;
-  },
-  [actions.sendMessageFailure](state) {
-    return state;
   },
 }, []);
 
@@ -36,8 +27,30 @@ const currentChannelId = handleActions({
   },
 }, {});
 
+const postRequests = handleActions({
+  [actions.sendMessageRequest](state) {
+    return {
+      ...state,
+      requestState: 'request',
+    };
+  },
+  [actions.sendMessageSuccess](state) {
+    return {
+      ...state,
+      requestState: 'success',
+    };
+  },
+  [actions.sendMessageFailure](state) {
+    return {
+      ...state,
+      requestState: 'failure',
+    };
+  },
+}, {});
+
 export default combineReducers({
   channels,
   messages,
   currentChannelId,
+  postRequests,
 });

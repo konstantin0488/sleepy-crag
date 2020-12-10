@@ -4,12 +4,13 @@ import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { createStore, applyMiddleware, compose } from 'redux';
+import io from 'socket.io-client';
 import rootReducer from './reducers/index';
 import App from './components/App';
 import UserNameContext from './components/UserNameContext';
 import { addMessage } from './actions/index';
 
-const app = (gon, userName, socket) => {
+const app = (gon, userName) => {
   const initialState = {
     channels: { ...gon.channels },
     messages: [...gon.messages],
@@ -23,9 +24,8 @@ const app = (gon, userName, socket) => {
     composeEnhancers(applyMiddleware(thunk)),
   );
 
-  socket.on('newMessage', ({ data }) => {
-    store.dispatch(addMessage(data.attributes));
-  });
+  const socket = io();
+  socket.on('newMessage', ({ data }) => store.dispatch(addMessage(data.attributes)));
 
   ReactDOM.render(
     /* eslint-disable-next-line react/jsx-filename-extension */

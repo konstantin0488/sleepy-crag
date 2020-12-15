@@ -8,11 +8,19 @@ import io from 'socket.io-client';
 import rootReducer from './reducers/index';
 import App from './components/App';
 import UserNameContext from './components/UserNameContext';
-import { addMessage } from './actions/index';
+import {
+  addMessage, addChannel, removeChannel, renameChannel, setCurrentChannelId,
+} from './actions/index';
 
 const app = (gon, userName) => {
+  const gonChannelsArray = Object.values(gon.channels);
+  // eslint-disable-next-line arrow-body-style
+  const gonInitial = gonChannelsArray.reduce((acc, channel) => {
+    return { ...acc, [channel.id]: channel };
+  }, {});
+
   const initialState = {
-    channels: { ...gon.channels },
+    channels: { ...gonInitial },
     messages: [...gon.messages],
     currentChannelId: { currentId: gon.currentChannelId },
   };
@@ -26,6 +34,12 @@ const app = (gon, userName) => {
 
   const socket = io();
   socket.on('newMessage', ({ data }) => store.dispatch(addMessage(data.attributes)));
+  socket.on('newChannel', ({ data }) => store.dispatch(addChannel(data.attributes)));
+  socket.on('renameChannel', ({ data }) => store.dispatch(renameChannel(data.attributes)));
+  socket.on('removeChannel', ({ data }) => {
+    store.dispatch(setCurrentChannelId(1));
+    store.dispatch(removeChannel(data.id));
+  });
 
   ReactDOM.render(
     /* eslint-disable-next-line react/jsx-filename-extension */

@@ -9,6 +9,14 @@ body,html{
   background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
   background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
 }
+.add_room_modal {
+  background: #9a9ad4;
+  background: -webkit-linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+  background: linear-gradient(to right, #91EAE4, #86A8E7, #7F7FD5);
+}
+.add_modal_text {
+  color: #fff;
+}
 .center_name {
   align-items: center;
 }
@@ -276,59 +284,56 @@ margin-bottom: 15px !important;
   }
 }
 
-// .button_room {
-//   @include center;
-//   background: #333;
-  // color: #ccc;
-//   width: 200px;
-//   height: 60px;
-//   border: 0;
-//   font-size: 18px;
-//   border-radius: 4px;
-//   font-family: 'Raleway', sans-serif;
-//   transition: .6s;
-//   overflow: hidden;
-//   &:focus{
-//     outline: 0;
-//   }
-//   &:before{
-//     content: '';
-//     display: block;
-//     position: absolute;
-//     background: rgba(255,255,255,0.5);
-//     width: 60px;
-//     height: 100%;
-//     left: 0;
-//     top: 0;
-//     opacity: .5;
-//     filter: blur(30px);
-//     transform: translateX(-100px)  skewX(-15deg);
-//   }
-//   &:after{
-//     content: '';
-//     display: block;
-//     position: absolute;
-//     background: rgba(255,255,255,0.2);
-//     width: 30px;
-//     height: 100%;
-//     left: 30px;
-//     top: 0;
-//     opacity: 0;
-//     filter: blur(5px);
-//     transform: translateX(-100px) skewX(-15deg);
-//   }
-//   &:hover{
-//     background: #338033;
-//     cursor: pointer;
-//     &:before{
-//       transform: translateX(300px)  skewX(-15deg);  
-//       opacity: 0.6;
-//       transition: .7s;
-//     }
-//     &:after{
-//       transform: translateX(300px) skewX(-15deg);  
-//       opacity: 1;
-//       transition: .7s;
-//     }
-//   }
-// }
+$width: 15px;
+$height: 15px;
+$bounce_height: 30px;
+
+.wrap {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.text {
+  color: #fbae17;
+  display: inline-block;
+  margin-left: 5px;
+}
+
+.bounceball {
+  position: relative;
+  display: inline-block;
+  height: 37px;
+  width: $width;
+  &:before {
+    position: absolute;
+    content: '';
+    display: block;
+    top: 0;
+    width: $width;
+    height: $height;
+    border-radius: 50%;
+    background-color: #fbae17;
+    transform-origin: 50%;
+    animation: bounce 500ms alternate infinite ease;
+  }
+}
+
+@keyframes bounce {
+  0% {
+    top: $bounce_height;
+    height: 5px;
+    border-radius: 60px 60px 20px 20px;
+    transform: scaleX(2);
+  }
+  35% {
+    height: $height;
+    border-radius: 50%;
+    transform: scaleX(1);
+  }
+  100% {
+    top: 0;
+  }
+}
+

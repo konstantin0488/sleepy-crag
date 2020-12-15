@@ -9,8 +9,6 @@ const MessageSection = () => {
 
   const channelName = useSelector((state) => state.channels);
   const channelCurrentId = useSelector((state) => state.currentChannelId.currentId);
-  const channelNamesArray = Object.values(channelName);
-  const currentChannelName = channelNamesArray.filter((channel) => channel.id === channelCurrentId);
 
   return (
     <div className="card">
@@ -25,7 +23,7 @@ const MessageSection = () => {
           <div>
             <h6>
               Room: &nbsp;
-              {currentChannelName[0].name}
+              {channelName[channelCurrentId].name}
             </h6>
           </div>
         </div>

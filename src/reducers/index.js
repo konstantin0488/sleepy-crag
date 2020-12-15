@@ -1,15 +1,24 @@
 import { handleActions } from 'redux-actions';
 import { combineReducers } from 'redux';
+import { omitBy } from 'lodash';
 import * as actions from '../actions';
-// import { uniqueId, omitBy } from 'lodash';
 
 const channels = handleActions({
-  // [actions.addChannel](state, { payload: newChannel }) {
-  //   return state;
-  // },
-  // [actions.removeChanel](state, { payload: channelId }) {
-  //   return state;
-  // },
+  [actions.addChannel](state, { payload: newChannel }) {
+    return {
+      ...state,
+      [newChannel.id]: newChannel,
+    };
+  },
+  [actions.removeChannel](state, { payload: channelId }) {
+    return omitBy(state, (value) => value.id === channelId);
+  },
+  [actions.renameChannel](state, { payload: channel }) {
+    return {
+      ...state,
+      [channel.id]: channel,
+    };
+  },
 }, {});
 
 const messages = handleActions({
@@ -19,7 +28,7 @@ const messages = handleActions({
 }, []);
 
 const currentChannelId = handleActions({
-  [actions.idCurrentChannel](state, { payload: id }) {
+  [actions.setCurrentChannelId](state, { payload: id }) {
     return {
       ...state,
       currentId: id,
@@ -29,28 +38,56 @@ const currentChannelId = handleActions({
 
 const postRequests = handleActions({
   [actions.sendMessageRequest](state) {
-    return {
-      ...state,
-      requestState: 'request',
-    };
+    return { ...state, requestStateMessage: 'request' };
   },
   [actions.sendMessageSuccess](state) {
-    return {
-      ...state,
-      requestState: 'success',
-    };
+    return { ...state, requestStateMessage: 'success' };
   },
   [actions.sendMessageFailure](state) {
-    return {
-      ...state,
-      requestState: 'failure',
-    };
+    return { ...state, requestStateMessage: 'failure' };
+  },
+  [actions.sendNewChannelRequest](state) {
+    return { ...state, requestStateChannel: 'request' };
+  },
+  [actions.sendNewChannelSuccess](state) {
+    return { ...state, requestStateChannel: 'success' };
+  },
+  [actions.sendNewChannelFailure](state) {
+    return { ...state, requestStateChannel: 'failure' };
+  },
+  [actions.renameChannelRequest](state) {
+    return { ...state, requestStateRename: 'request' };
+  },
+  [actions.renameChannelSuccess](state) {
+    return { ...state, requestStateRename: 'success' };
+  },
+  [actions.renameChannelFailure](state) {
+    return { ...state, requestStateRename: 'failure' };
   },
 }, {});
+
+const modals = handleActions({
+  [actions.showNewChannelModal](state) {
+    return { ...state, isModal: !state.isModal };
+  },
+  [actions.showChannelRemoveModal](state, { payload: id }) {
+    return { ...state, isModalRemove: !state.isModalRemove, currentChannelId: id };
+  },
+  [actions.showChannelRenameModal](state, { payload: id }) {
+    return {
+      ...state, isModalRename: !state.isModalRename, currentChannelId: id,
+    };
+  },
+}, {
+  isModal: false,
+  isModalRemove: false,
+  isModalRename: false,
+});
 
 export default combineReducers({
   channels,
   messages,
   currentChannelId,
   postRequests,
+  modals,
 });

@@ -5,13 +5,17 @@ import { showChannelRemoveModal, removeCurrentChannel } from '../actions';
 
 const RemoveChannelModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.modals.isModalRemove);
-  const currentChannelId = useSelector((state) => state.modals.currentChannelId);
+  const isOpen = useSelector((state) => state.ui.isModalRemove);
+  const currentChannelId = useSelector((state) => state.ui.currentChannelId);
+  const request = useSelector((state) => state.ui.requestStateRemove);
 
   const handleClose = () => dispatch(showChannelRemoveModal());
-  const onClickRemoveChannel = () => {
-    dispatch(removeCurrentChannel(currentChannelId));
-    handleClose();
+
+  const onClickRemoveChannel = async () => {
+    const response = await dispatch(removeCurrentChannel(currentChannelId));
+    if (response) {
+      await dispatch(showChannelRemoveModal());
+    }
   };
 
   return (
@@ -20,7 +24,13 @@ const RemoveChannelModal = () => {
         <Modal.Title>NOTIFICATION !</Modal.Title>
       </Modal.Header>
       <Modal.Body className="add_room_modal">
-        Are you sure you want to remove the room?
+        {
+          request === 'request' ? (
+            <div className="spinner-border" role="status">
+              <span className="sr-only">Loading...</span>
+            </div>
+          ) : 'Are you sure you want to remove the room?'
+        }
       </Modal.Body>
       <Modal.Footer className="add_room_modal">
         <Button onClick={onClickRemoveChannel}>YES</Button>

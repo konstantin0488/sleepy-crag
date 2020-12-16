@@ -6,7 +6,7 @@ import RenameChannelModalForm from './RenameChannelModalForm';
 
 const RenameChannelModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.modals.isModalRename);
+  const isOpen = useSelector((state) => state.ui.isModalRename);
 
   const handleClose = () => dispatch(showChannelRenameModal());
 

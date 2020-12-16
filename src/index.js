@@ -6,18 +6,8 @@ import 'regenerator-runtime/runtime';
 import '../assets/application.scss';
 import gon from 'gon';
 import app from './app';
+import startLoader from './loader';
 
-const startLoader = () => {
-  const loader = document.querySelector('.wrap');
-  window.onload = () => {
-    setTimeout(() => {
-      loader.style.opacity = '0';
-      setTimeout(() => {
-        loader.style.display = 'none';
-      }, 500);
-    }, 1500);
-  };
-};
 startLoader();
 
 if (process.env.NODE_ENV !== 'production') {

@@ -96,7 +96,7 @@ const ChannelList = () => {
         </ul>
       </div>
       <div className="card-footer">
-        <a href="#" className="button_add btn btn-block" onClick={addRoom}>ADD ROOM</a>
+        <button type="button" className="button_add btn btn-block" onClick={addRoom}>ADD ROOM</button>
       </div>
     </>
   );

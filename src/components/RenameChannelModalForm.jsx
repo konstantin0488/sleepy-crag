@@ -8,9 +8,11 @@ const RenameChannelModalForm = () => {
   const idRenameChannel = useSelector((state) => state.currentChannelId.currentId);
   const channel = useSelector((state) => state.channels[idRenameChannel].name);
 
-  const onSubmit = ({ newRoomName }) => {
-    dispatch(renameCurrentChannel(newRoomName, idRenameChannel));
-    dispatch(showChannelRenameModal());
+  const onSubmit = async ({ newRoomName }) => {
+    const response = await dispatch(renameCurrentChannel(newRoomName, idRenameChannel));
+    if (response) {
+      await dispatch(showChannelRenameModal());
+    }
   };
 
   return (
@@ -32,7 +34,13 @@ const RenameChannelModalForm = () => {
                 className="send_btn bg-primary"
                 disabled={submitting || pristine}
               >
-                OK
+                {
+                  submitting ? (
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  ) : 'OK'
+                }
               </button>
             </div>
           </div>

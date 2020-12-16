@@ -6,9 +6,11 @@ import { sendNewChannel, showNewChannelModal } from '../actions';
 const AddRoomModalForm = () => {
   const dispatch = useDispatch();
 
-  const onSubmit = ({ newRoom }) => {
-    dispatch(sendNewChannel(newRoom));
-    dispatch(showNewChannelModal());
+  const onSubmit = async ({ newRoom }) => {
+    const response = await dispatch(sendNewChannel(newRoom));
+    if (response) {
+      await dispatch(showNewChannelModal());
+    }
   };
 
   return (
@@ -30,7 +32,13 @@ const AddRoomModalForm = () => {
                 className="send_btn bg-primary"
                 disabled={submitting || pristine}
               >
-                CREATE
+                {
+                  submitting ? (
+                    <div className="spinner-border" role="status">
+                      <span className="sr-only">Loading...</span>
+                    </div>
+                  ) : 'CREATE'
+                }
               </button>
             </div>
           </div>

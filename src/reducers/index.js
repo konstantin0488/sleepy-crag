@@ -36,7 +36,18 @@ const currentChannelId = handleActions({
   },
 }, {});
 
-const postRequests = handleActions({
+const ui = handleActions({
+  [actions.showNewChannelModal](state) {
+    return { ...state, isModal: !state.isModal };
+  },
+  [actions.showChannelRemoveModal](state, { payload: id }) {
+    return { ...state, isModalRemove: !state.isModalRemove, currentChannelId: id };
+  },
+  [actions.showChannelRenameModal](state, { payload: id }) {
+    return {
+      ...state, isModalRename: !state.isModalRename, currentChannelId: id,
+    };
+  },
   [actions.sendMessageRequest](state) {
     return { ...state, requestStateMessage: 'request' };
   },
@@ -64,19 +75,14 @@ const postRequests = handleActions({
   [actions.renameChannelFailure](state) {
     return { ...state, requestStateRename: 'failure' };
   },
-}, {});
-
-const modals = handleActions({
-  [actions.showNewChannelModal](state) {
-    return { ...state, isModal: !state.isModal };
+  [actions.removeChannelSuccess](state) {
+    return { ...state, requestStateRemove: 'success' };
   },
-  [actions.showChannelRemoveModal](state, { payload: id }) {
-    return { ...state, isModalRemove: !state.isModalRemove, currentChannelId: id };
+  [actions.removeChannelRequest](state) {
+    return { ...state, requestStateRemove: 'request' };
   },
-  [actions.showChannelRenameModal](state, { payload: id }) {
-    return {
-      ...state, isModalRename: !state.isModalRename, currentChannelId: id,
-    };
+  [actions.removeChannelFailure](state) {
+    return { ...state, requestStateRemove: 'failure' };
   },
 }, {
   isModal: false,
@@ -88,6 +94,5 @@ export default combineReducers({
   channels,
   messages,
   currentChannelId,
-  postRequests,
-  modals,
+  ui,
 });

@@ -6,9 +6,10 @@ import AddRoomModalForm from './AddRoomModalForm';
 
 const AddRoomModal = () => {
   const dispatch = useDispatch();
-  const isOpen = useSelector((state) => state.modals.isModal);
+  const isOpen = useSelector((state) => state.ui.isModal);
 
   const handleClose = () => dispatch(showNewChannelModal());
+
   return (
     <Modal show={isOpen} onHide={handleClose}>
       <Modal.Header closeButton className="add_room_modal">
